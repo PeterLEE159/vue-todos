@@ -5,6 +5,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    toggleLoading: 0
+  },
+  getters: {
 
   },
   mutations: {
