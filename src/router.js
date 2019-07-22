@@ -1,25 +1,34 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Page from './views/Page.vue';
-import TodosPage from './views/TodosPage.vue';
+import VueRouter from 'vue-router';
+import AppComponent from '@/App.vue';
+import PageComponent from '@/components/Page.vue';
+import TodoPageComponent from '@/components/TodoPage.vue';
+import UserPageComponent from '@/components/UserPage.vue';
 
 
-Vue.use(Router);
+const date = new Date();
+const redirect = `/todos/${date.getFullYear()}/${String(date.getMonth()+1).padStart(2, '0')}`;
 
-export default new Router({
-  // mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [{ 
-      path: '/', component: Page, children: [
-        { path: '', redirect: 'todos'    },
-        { path: 'todos', component: TodosPage }
+const routes = [
+  { 
+    path: '', component: AppComponent, redirect, children: [
+      { path: 'todos/:year/:month', component: TodoPageComponent, props: true, hash: 'day' },
+      { path: 'users', component: UserPageComponent }
+    ]
+  },
 
-      ]
-    },
+  { path: '*', redirect }
+
+];
 
 
-    { path: '*', redirect: '/toods' }
-    // { path: '/about', name: 'about', component: () => import('./views/About.vue') }, // lazy loaded
-    
-  ],
+
+export default new VueRouter({
+  routes
+  // scrollBehavior(to, from, savedPosition) {
+
+  //   if(to.hash) return { selector: to.hash };
+  //   if(savedPosition) return savedPosition;
+
+  //   return { x: 0, y: 0 };
+  // }
 });

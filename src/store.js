@@ -5,10 +5,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    toggleLoading: 0
+    todos: [],
+    users: []
   },
   getters: {
-
+    getTodos(state) {
+      return state.todos;
+    }
   },
   mutations: {
 

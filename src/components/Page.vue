@@ -1,26 +1,37 @@
 <template>
   <div id="app-page">
+    
+    <!-- <div class="page-header">
+      <span>TODO</span>
+    </div> -->
+
     <router-view></router-view>
+    <!-- <app-todo-page-component></app-todo-page-component> -->
+
+
     <div class="page-loading" v-if="isLoadingShow">
-      <img src="./../assets/implant.gif">
+      <img src="@/assets/implant.gif">
       <div></div>
     </div>
 
     <div class="page-alert alert" :class="{ 'alert-success': isToastSuccess, 'alert-danger': !isToastSuccess }" v-if="isToastShow">
       <span>{{ toastMsg }}</span>
-      
     </div>
 
   </div>
   
 </template>
 <script>
-  import elemBus from './../elem.bus';
+  import elemBus from '@/elem.bus';
+  import AppTodoPageComponent from './TodoPage'
   export default {
+    components: { 
+      AppTodoPageComponent
+    },
     data() {
       return {
         isLoadingShow: true,
-        isToastShow: true,
+        isToastShow: false,
         isToastSuccess: true,
         toastMsg: ''
       }
@@ -73,16 +84,38 @@
       position: fixed;
       right: 24px;
       top: 24px;
-      width: 200px;
+      width: 300px;
+
       min-height: 60px;
       max-height: 120px;
-      padding: 4px;
+      padding: 12px;
       margin: 0;
       display: flex;
+      border: 12px;
       span {
         margin: auto;
         font-size: 14px;
       }
     }
+    .alert-danger {
+      background: #f55;
+      color: white;
+    }
+    .alert-success {
+      background: #3f3;
+      color: black;
+    }
+
+  .page-header {
+    border-bottom: 1px solid #ddd;
+    height: 80px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    span {
+      font-size: 32px;
+      color: black;
+    }
+  }
 </style>
 
