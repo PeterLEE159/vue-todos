@@ -10,9 +10,12 @@ const redirect = `/todos/${date.getFullYear()}/${String(date.getMonth()+1).padSt
 
 const routes = [
   { 
-    path: '', component: AppComponent, redirect, children: [
-      { path: 'todos/:year/:month', component: TodoPageComponent, props: true, hash: 'day' },
-      { path: 'users', component: UserPageComponent }
+    path: '/', component: AppComponent, redirect, children: [
+      { path: '', component: PageComponent, childrent: [
+          { path: 'todos/:year/:month', component: UserPageComponent, props: true, hash: 'day' },
+          { path: 'users', component: UserPageComponent }
+        ]
+      }
     ]
   },
 

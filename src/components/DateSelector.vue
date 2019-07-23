@@ -92,10 +92,12 @@ export default {
 
 
 <style scoped lang="scss">
+  @import '@/assets/variable.scss';
+
   #app-date-selector {
     width: 100%;
     height: 100%;
-    background: #2F97C1;
+    background: $primary;
     display: flex;
     justify-content: center;
     align-items: center;

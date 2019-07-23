@@ -10,8 +10,8 @@
 
 
     <div class="page-loading" v-if="isLoadingShow">
-      <img src="@/assets/implant.gif">
-      <div></div>
+      <!-- <img src="@/assets/implant.gif">
+      <div></div> -->
     </div>
 
     <div class="page-alert alert" :class="{ 'alert-success': isToastSuccess, 'alert-danger': !isToastSuccess }" v-if="isToastShow">
@@ -54,6 +54,9 @@
 </script>
 
 <style lang="scss" scoped>
+
+  @import '@/assets/variable.scss';
+  
   .page-loading {
     position: fixed;
     left: 0;
