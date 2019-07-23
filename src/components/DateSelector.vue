@@ -43,7 +43,6 @@ export default {
       currYear: new Date().getFullYear(),
       currMonth: new Date().getMonth() + 1,
       dateTimeout: undefined
-
     }
   },
   
@@ -71,6 +70,12 @@ export default {
         return;
       }
 
+      if(year < 1990) {
+        elemBus.toast('1990년도 이하로는 갈수 없습니다.');
+        this.year = this.currYear;
+        return;
+      }
+
       
 
       this.year = year;
@@ -80,7 +85,7 @@ export default {
       
       this.dateTimeout = setTimeout(() => {
         this.$router.push({ path: `/todos/${this.year}/${this.month}`, hash: '1' });
-      }, 2000)
+      }, 1000)
       
     }
 
@@ -97,12 +102,14 @@ export default {
   #app-date-selector {
     width: 100%;
     height: 100%;
-    background: $primary;
+    
+    background: white;
+    box-shadow: 3px 5px 6px $shadow;
     display: flex;
     justify-content: center;
     align-items: center;
     * {
-      color: white;
+      color: #333;
     }
     .centered {
       margin: 0;
@@ -111,7 +118,8 @@ export default {
         display: flex;
         flex-direction: row;
         i {
-          font-size: 42px;
+          font-size: 36px;
+          color: #999;
           margin: 8px 12px;
           cursor: pointer;
         }
@@ -120,7 +128,7 @@ export default {
           border: 0;
           text-align: center;
           outline: 0;
-          border-bottom: 1px solid white;
+          border-bottom: 1px solid #cdcdcd;
           font-size: 24px;
           background: transparent;
         }

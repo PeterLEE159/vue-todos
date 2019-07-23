@@ -10,7 +10,7 @@
         <button class="btn btn-primary" @click.stop="onSearchTodos">검색</button>
       </div>
       <div class="todos-group">
-        <i v-if="isLoading" class="fa fa-sub fa-4x fa-spinner fa-spin"></i>
+        <i v-if="isLoading" class="fa fa-sub fa-3x fa-spinner fa-spin"></i>
         <app-todos v-if="!isLoading" :todos="todos"></app-todos>
       </div>
     </div>
@@ -25,12 +25,12 @@ import AppTodos from './Todos.vue';
 import elemBus from '@/elem.bus';
 import Todo from '@/model/Todo';
 import { setTimeout } from 'timers';
-import mixins from '@/mixins';
+import mixin from '@/mixins';
 
 
 export default {
   name: 'app-todo-page',
-  mixins: [mixins],
+  mixins: [mixin],
   props: [ 'year', 'month' ],
   data() {
     return {
@@ -47,13 +47,9 @@ export default {
     AppDateSelector
   },
   created() {
-    // elemBus.toggleLoading(true);
-    
-    
-    elemBus.toggleLoading(false);
-    setTimeout(this.loadData, 3000);
+    // setTimeout(this.loadData, 1500);
 
-    // this.createFakeTodos();
+    setTimeout(this.createFakeTodos, 1500);
   },
   watch: {
     year() {
@@ -65,6 +61,9 @@ export default {
   },
   methods: {
     createFakeTodos() {
+      
+      elemBus.toggleLoading(false);
+
       let year = 2019;
       const contents = [ '책상정리', '모임참여', '동창회 참여', '결혼식 참여', '자격증 공부', '시장보기', '도서관 가기', '식물 물주기', '산보' ];
       const priorities = [ '높음', '중간', '낮음' ];
@@ -72,35 +71,35 @@ export default {
       this.date = undefined;
       this.priority = undefined;
       this.progress = undefined;
-      for(let month = 6; month <= 7; month++) {
-        for(let day = 1; day <= 31; day++) {
-            for(let i=0; i <5 ; i++) {
+      const todos = [];
+      const month = 7;
+      
+      for(let day = 1; day <= 31; day++) {
+          for(let i=0; i < 3 ; i++) {
             const rand = Math.random();
-            const todo = { 
+            const todo = new Todo({ 
                 content: contents[Math.floor(rand * 6)], 
-                date: Number(String(year) + String(month).padStart(2, '0') + String(day).padStart(2, '0')),
+                date: Number(this.getStringDate(year, month, day)),
                 priority: priorities[Math.floor(rand * 2)], 
-                progress: progresses[Math.floor(rand * 4)]
-            };
-            
-            this.$http.service.todoService.createTodo(todo)
-          }
+                progress: progresses[Math.floor(rand * 4)],
+                isEdit: false
+            });
+          
+          todos.push(todo);
+          
+          
+          // this.$http.service.todoService.createTodo(todo)
         }
-        
       }
+        
+      
+      this.$store.state.todos = todos;
     },
     onSearchTodos() {
       if(this.typed == '') {
         elemBus.toast('검색단어를 입력하세요');
         return;
       }
-      
-      // const todo = new Todo({ type: this.typed});
-      // this.$http.service.todoService.createTodo(todo)
-      //   .then((res) => {
-
-      //   }
-      // );
 
       
     },
@@ -110,31 +109,26 @@ export default {
 
       if(this.searchTimeout != null) clearTimeout(this.searchTimeout);
 
-      this.searchTimeout = setTimeout(this.onSearchTodos, 2000);
+      this.searchTimeout = setTimeout(this.onSearchTodos, 50);
     },
+    
     loadData() {
+
+      this.$http.forkJoin([
+        this.$http.service.todoService.getTodos(this.$route.params.year, this.$route.params.month),
+        this.$http.service.userService.getUsers()
+      ]).then(res => {
+        elemBus.toggleLoading(false);
+      });
       
-      // this.$http.forkJoin([
-      // this.$http.service.todoService.getTodos('20190722'),
-      // this.$http.service.userService.getUsers()
-      // ]).then((res) => {
-      //   elemBus.toggleLoading(false);
-      // });
-      this.$store.state.todos = [
-        { content: 'qq', date: 20190722 },
-        { content: 'ww', date: 20190721 }
-      ];
       
     },
     loadTodos() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 2000)
-      // this.$http.service.todoService.getTodos(this.year, this.month)
-      //     .then((res) => {
-      //       this.isLoading = false;
-      // });
+
+      this.$http.service.todoService.getTodos(this.year, this.month)
+          .then((res) => {
+            this.isLoading = false;
+      });
     }
   }
   
@@ -153,14 +147,16 @@ export default {
   .date-selector-group {
     width: 250px;
     height: 100vh;
+    top: 0;
     position: fixed;
   }
   .todos {
-    margin: 64px 0 32px 0;
-    padding: 12px;
-    margin-left: 320px;
-    width: calc(100% - 600px);
+    padding: 64px;
+    margin-left: 250px;
+    width: calc(100% - 500px);
+    min-width: 1400px;
     height: 100vh;
+    margin-top: 6px;
     
     .todos-option {
       display: flex;

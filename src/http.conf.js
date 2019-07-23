@@ -5,7 +5,7 @@ import todoService from '@/service/todo.service';
 import userService from '@/service/user.service';
 
 
-axios.defaults.baseURL = 'https://vue-test-896f7.firebaseio.com/';
+axios.defaults.baseURL = 'https://v-todos.firebaseio.com/';
 
 
 axios.interceptors.request.use(conf => {

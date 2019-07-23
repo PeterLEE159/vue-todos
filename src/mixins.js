@@ -1,18 +1,30 @@
 export default {
-  data() {
-    return {
-      
-    }
-  },
   methods: {
-    getStringDate(year, month, day) {
-      let dt = String(year) + String(month).padStart(2, '0');
-      if(day != null) dt += String(day).padStart(2, '0');
-      return dt;
+    getStringDate(year, month, day = 0) {
+
+      return String(year) + String(month).padStart(2, '0') + String(day).padStart(2, '0');
     },
     getNumberDate(date) {
        date = String(date);
        return { year: date.substr(0, 4), month: date.substr(4, 6), day: date.substr(6) };
-    } 
+    },
+    shallowCopy(target, origin) {
+      for(let key in origin) {
+        target[key] = origin[key];
+      }
+      
+      return target;
+    },
+    deleteObj(arr, item) {
+      let idx = -1;
+      for(let i =0; i < arr.length; i ++) {
+        if(item != arr[i]) continue;
+        idx = i;
+      }
+      
+      if(idx > -1) arr.splice(idx, 1);
+
+      return idx;
+    }
   }
 }

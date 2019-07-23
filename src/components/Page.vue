@@ -1,22 +1,22 @@
 <template>
   <div id="app-page">
     
-    <!-- <div class="page-header">
-      <span>TODO</span>
-    </div> -->
+    <div class="todo-page-header">
+      <span class="logo">VUE 스터디</span>
+    </div>
 
     <router-view></router-view>
-    <!-- <app-todo-page-component></app-todo-page-component> -->
-
 
     <div class="page-loading" v-if="isLoadingShow">
-      <!-- <img src="@/assets/implant.gif">
-      <div></div> -->
+      <img src="@/assets/implant.gif">
+      <div></div>
     </div>
 
     <div class="page-alert alert" :class="{ 'alert-success': isToastSuccess, 'alert-danger': !isToastSuccess }" v-if="isToastShow">
       <span>{{ toastMsg }}</span>
     </div>
+
+    <div class="base-bg"></div>
 
   </div>
   
@@ -109,16 +109,33 @@
       color: black;
     }
 
-  .page-header {
-    border-bottom: 1px solid #ddd;
+  .todo-page-header {
+    box-shadow: 0px 3px 3px $shadow;
     height: 80px;
-    padding: 0 24px;
+    padding: 0 42px;
     display: flex;
+    z-index: 100;
+    background: white;
     align-items: center;
-    span {
-      font-size: 32px;
-      color: black;
-    }
+    justify-content: flex-end;
+
+    padding-left: 300px;
+    .logo {
+        font-size: 32px;
+        color: #666;
+        font-family: 'deco';
+        font-weight: bold;
+      }
+  }
+
+  .base-bg {
+    background: #f9f9f9;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -99999;
   }
 </style>
 

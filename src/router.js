@@ -10,13 +10,13 @@ const redirect = `/todos/${date.getFullYear()}/${String(date.getMonth()+1).padSt
 
 const routes = [
   { 
-    path: '/', component: AppComponent, redirect, children: [
-      { path: '', component: PageComponent, childrent: [
-          { path: 'todos/:year/:month', component: UserPageComponent, props: true, hash: 'day' },
-          { path: 'users', component: UserPageComponent }
-        ]
-      }
-    ]
+    
+    path: '', component: PageComponent, redirect: redirect, children: [
+        { path: 'todos/:year/:month', component: TodoPageComponent, props: true, hash: 'day' },
+        { path: 'users', component: UserPageComponent }
+      ]
+      
+    
   },
 
   { path: '*', redirect }
@@ -26,7 +26,8 @@ const routes = [
 
 
 export default new VueRouter({
-  routes
+  routes,
+  mode: 'history'
   // scrollBehavior(to, from, savedPosition) {
 
   //   if(to.hash) return { selector: to.hash };

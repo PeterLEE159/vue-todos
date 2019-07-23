@@ -14,6 +14,7 @@ export default {
         const path = `${this.path}?orderBy="date"&startAt=${date}00&endAt=${date}99`;
         
         return axios.get(path).then((res) => {
+        
             res = axios.parseF(res);
             res = _.sortBy(res, [ 'date' ]);
             store.state.todos = res;
@@ -26,7 +27,24 @@ export default {
     createTodo(todo) {
 
         return axios.post(this.path, todo).then((res) => {
+            console.log('todo created');
+            return res;
+        });
+    },
+
+
+    updateTodo(todo) {
+        return axios.put(this.path, todo).then((res) => {
+            console.log('todo updated');
+            return res;
+        });
+    },
+
+    deleteTodo(todo) {
+        return axios.delete(this.path, todo).then((res) => {
+            console.log('todo deleted');
             return res;
         });
     }
+
 }
