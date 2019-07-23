@@ -111,7 +111,7 @@ export default {
 
       this.searchTimeout = setTimeout(this.onSearchTodos, 50);
     },
-    
+
     loadData() {
 
       this.$http.forkJoin([
@@ -124,11 +124,14 @@ export default {
       
     },
     loadTodos() {
-
-      this.$http.service.todoService.getTodos(this.year, this.month)
+      this.isLoading = true;
+      setTimeout(() => {
+        this.$http.service.todoService.getTodos(this.year, this.month)
           .then((res) => {
             this.isLoading = false;
-      });
+        });
+      }, 500);
+      
     }
   }
   
