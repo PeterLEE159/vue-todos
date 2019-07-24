@@ -9,7 +9,7 @@
             <span>{{ dt + 1 }} 일 :</span>
           </div>
           
-          <div class="todo-lt"  v-for="(todo, idx) in todos" :key="idx" v-scroll-spy="{time: 200, steps: 30}">
+          <div class="todo-lt"  v-for="(todo, idx) in todos" :key="idx">
             <template v-if="!todo.isEdit">
 
               <div class="todo-hovered">

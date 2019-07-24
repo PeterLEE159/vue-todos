@@ -9,7 +9,7 @@ import VueLodash from 'vue-lodash'
 import VueAxios from 'vue-axios'
 import VueRouter from 'vue-router';
 import router from '@/router';
-import Scrollspy from 'vue2-scrollspy';
+
 
 
 Vue.use(VueRx);
@@ -17,7 +17,7 @@ Vue.use(VueAxios, axios);
 Vue.use(VueLodash, { name: 'lodash' });
 Vue.use(UUID);
 Vue.use(VueRouter);
-Vue.use(Scrollspy);
+
 
 require('./http.conf');
 
