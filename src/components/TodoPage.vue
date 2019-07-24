@@ -6,12 +6,12 @@
     </div>
     <div class="todos">
       <div class="todos-option">
-        <input class="form-control" type="text" placeholder="날짜 혹은 내용을 입력하세요." v-model="typed" @change.stop="onSearchTodosTyped">
+        <input class="form-control" type="text" placeholder="날짜 혹은 내용을 입력하세요." v-model="typed" @keydown.stop="onSearchTodosTyped">
         <button class="btn btn-primary" @click.stop="onSearchTodos">검색</button>
       </div>
       <div class="todos-group">
         <i v-if="isLoading" class="fa fa-sub fa-3x fa-spinner fa-spin"></i>
-        <app-todos v-if="!isLoading" :todos="todos"></app-todos>
+        <app-todos v-if="!isLoading" :todos="todos" :searchTerm="searchTerm"></app-todos>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
 <script>
 import AppDateSelector from './DateSelector.vue';
 import AppTodos from './Todos.vue';
-import elemBus from '@/elem.bus';
+
 import Todo from '@/model/Todo';
 import { setTimeout } from 'timers';
 import mixin from '@/mixins';
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       typed: '',
+      searchTerm: '',
       todos: [],
       searchTimeout: undefined,
       // year: this.$route.params.year,
@@ -47,9 +48,9 @@ export default {
     AppDateSelector
   },
   created() {
-    // setTimeout(this.loadData, 1500);
+    setTimeout(this.loadData, 1000);
 
-    setTimeout(this.createFakeTodos, 1500);
+    // setTimeout(this.createFakeTodos, 1000);
   },
   watch: {
     year() {
@@ -62,7 +63,7 @@ export default {
   methods: {
     createFakeTodos() {
       
-      elemBus.toggleLoading(false);
+      this.toggleLoading(false);
 
       let year = 2019;
       const contents = [ '책상정리', '모임참여', '동창회 참여', '결혼식 참여', '자격증 공부', '시장보기', '도서관 가기', '식물 물주기', '산보' ];
@@ -82,34 +83,27 @@ export default {
                 date: Number(this.getStringDate(year, month, day)),
                 priority: priorities[Math.floor(rand * 2)], 
                 progress: progresses[Math.floor(rand * 4)],
-                isEdit: false
+                isEdit: false,
             });
           
           todos.push(todo);
           
           
-          // this.$http.service.todoService.createTodo(todo)
+          this.$http.service.todoService.createTodo(todo)
         }
       }
         
       
       this.$store.state.todos = todos;
     },
-    onSearchTodos() {
-      if(this.typed == '') {
-        elemBus.toast('검색단어를 입력하세요');
-        return;
-      }
-
-      
-    },
+    
     onSearchTodosTyped() {
 
-      if(this.typed) return;
-
+      
       if(this.searchTimeout != null) clearTimeout(this.searchTimeout);
 
-      this.searchTimeout = setTimeout(this.onSearchTodos, 50);
+      this.searchTimeout = setTimeout(() => this.searchTerm = this.typed, 50);
+
     },
 
     loadData() {
@@ -118,7 +112,7 @@ export default {
         this.$http.service.todoService.getTodos(this.$route.params.year, this.$route.params.month),
         this.$http.service.userService.getUsers()
       ]).then(res => {
-        elemBus.toggleLoading(false);
+        this.toggleLoading(false);
       });
       
       

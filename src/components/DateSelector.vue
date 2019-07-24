@@ -29,10 +29,12 @@
 </template>
 
 <script>
-import elemBus from '@/elem.bus';
+import mixin from '@/mixins';
 
 export default {
   name: 'app-date-selector',
+
+  mixins: [mixin],
 
   data() {
     return {
@@ -53,25 +55,25 @@ export default {
   methods: {
     onDateChanged(year, month) {
       
-      if(month > this.currMonth && year == this.currYear) {
-        elemBus.toast('선택된 달이 현재보다 높게 선택되었습니다.');
-        this.month = String(this.currMonth).padStart(2, '0');
-        return;
-      }
+      // if(month > this.currMonth && year == this.currYear) {
+      //   this.toast('선택된 달이 현재보다 높게 선택되었습니다.');
+      //   this.month = String(this.currMonth).padStart(2, '0');
+      //   return;
+      // }
 
       if(month <= 0) {
         month = 12;
         year -= 1;
       }
 
-      if(year > this.currYear) {
-        elemBus.toast('년도가 현재보다 높게 선택되었습니다.');
-        this.year = this.currYear;
-        return;
-      }
+      // if(year > this.currYear) {
+      //   this.toast('년도가 현재보다 높게 선택되었습니다.');
+      //   this.year = this.currYear;
+      //   return;
+      // }
 
       if(year < 1990) {
-        elemBus.toast('1990년도 이하로는 갈수 없습니다.');
+        this.toast('1990년도 이하로는 갈수 없습니다.');
         this.year = this.currYear;
         return;
       }

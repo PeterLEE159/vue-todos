@@ -4,7 +4,9 @@ export default function (json = null) {
     this.date = undefined;
     this.priority = undefined;
     this.progress = undefined;
-
+    this.searchTerm = undefined;
+    this.key = undefined;
+    
     if(json == null) return;
     
 

@@ -1,4 +1,7 @@
+import elemBus from '@/elem.bus';
+
 export default {
+  
   methods: {
     getStringDate(year, month, day = 0) {
 
@@ -25,6 +28,13 @@ export default {
       if(idx > -1) arr.splice(idx, 1);
 
       return idx;
+    },
+
+    toggleLoading(isLoading) {
+      elemBus.toggleLoading(isLoading);
+    },
+    toast(toastMsg = '', isToastSuccess = false) {
+      elemBus.toast(toastMsg, isToastSuccess);
     }
   }
 }

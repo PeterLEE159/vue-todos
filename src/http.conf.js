@@ -24,7 +24,9 @@ axios.interceptors.response.use(res => {
 axios.parseF = ((data = {}) => {
   const parsed = [];
   for(let key in data) {
-    parsed.push(data[key]);
+    const val = data[key];
+    val[key] = key;
+    parsed.push(val);
   }
   return parsed;
 });
