@@ -2,7 +2,7 @@
   <div id="app-page">
     
     <div class="todo-page-header">
-      <span class="logo">VUE 스터디</span>
+      <span class="logo">VUE TODO</span>
     </div>
 
     <router-view></router-view>

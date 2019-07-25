@@ -8,84 +8,84 @@
           <div class="dt">
             <span>{{ dt + 1 }} 일 :</span>
           </div>
-          
-          <div class="todo-lt"  v-for="(todo, idx) in todos" :key="idx">
-            <template v-if="!todo.isEdit">
+          <div class="todo-lt-cover" v-for="(todo, idx) in todos" :key="idx">
+            <div class="todo-lt">
+              <template v-if="!todo.isEdit">
 
-              <div class="todo-hovered">
-                <button class="btn btn-edit" @click.stop="onStartEditTodo(todo)">수정</button>
-                <button class="btn btn-del" @click.stop="onDeleteTodo(todo)">삭제</button>
-              </div>
+                <div class="todo-hovered">
+                  <button class="btn btn-edit" @click.stop="onStartEditTodo(todo)">수정</button>
+                  <button class="btn btn-del" @click.stop="onDeleteTodo(todo)">삭제</button>
+                </div>
 
-              <div class="todo-etc">
+                <div class="todo-etc">
 
-              </div>
-              <div class="todo-content">
-                {{ todo.content }}
-              </div>
-              <div class="todo-progress">
-                <span class="todo-badge" :style="{ background: badgeColors[todo.progress] }">
-                  {{ todo.progress }}
-                </span>
-              </div>
-              <div class="todo-priority">
-                <span class="todo-badge" :style="{ background: badgeColors[todo.priority] }">
-                  {{ todo.priority }}
-                </span>
-              </div>
-              <div class="todo-opts">
+                </div>
+                <div class="todo-content">
+                  {{ todo.content }}
+                </div>
+                <div class="todo-progress">
+                  <span class="todo-badge" :style="{ background: badgeColors[todo.progress] }">
+                    {{ todo.progress }}
+                  </span>
+                </div>
+                <div class="todo-priority">
+                  <span class="todo-badge" :style="{ background: badgeColors[todo.priority] }">
+                    {{ todo.priority }}
+                  </span>
+                </div>
+                
+              </template>
 
-              </div>
+              <template v-if="todo.isEdit">
+                <div class="todo-etc">
+
+                </div>
+                <div class="todo-content">
+                  <input type="text" class="form-control" v-model="todo.content" ref="todoContentElem">
+                </div>
+                <div class="todo-progress">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" 
+                      :style="{ background: badgeColors[todo.progress] }" >
+                      {{ todo.progress }} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li @click="todo.progress = '대기'"><a>대기</a></li>
+                      <li @click="todo.progress = '연기'"><a>연기</a></li>
+                      <li @click="todo.progress = '진행'"><a>진행</a></li>
+                      <li @click="todo.progress = '완료'"><a>완료</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="todo-priority">
+
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" 
+                      :style="{ background: badgeColors[todo.priority] }" >
+                      {{ todo.priority }} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li @click="todo.priority = '낮음'"><a>낮음</a></li>
+                      <li @click="todo.priority = '중간'"><a>중간</a></li>
+                      <li @click="todo.priority = '높음'"><a>높음</a></li>
+                    </ul>
+                  </div>
+                </div>
+                
+                
+              </template>
               
-            </template>
 
-            <template v-if="todo.isEdit">
-              <div class="todo-etc">
-
-              </div>
-              <div class="todo-content">
-                <input type="text" class="form-control" v-model="todo.content" ref="todoContentElem">
-              </div>
-              <div class="todo-progress">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" 
-                    :style="{ background: badgeColors[todo.progress] }" >
-                    {{ todo.progress }} <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li @click="todo.progress = '대기'"><a>대기</a></li>
-                    <li @click="todo.progress = '연기'"><a>연기</a></li>
-                    <li @click="todo.progress = '진행'"><a>진행</a></li>
-                    <li @click="todo.progress = '완료'"><a>완료</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="todo-priority">
-
-                <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" 
-                    :style="{ background: badgeColors[todo.priority] }" >
-                    {{ todo.priority }} <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li @click="todo.priority = '낮음'"><a>낮음</a></li>
-                    <li @click="todo.priority = '중간'"><a>중간</a></li>
-                    <li @click="todo.priority = '높음'"><a>높음</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="todo-opts">
+            </div>
+            <div class="todo-opts">
                 <template v-if="todo.isEdit">
                   <i class="fa fa-check fa-sub" @click.stop="onUpdateTodo(todo)"></i>
                   <i class="fa fa-refresh" @click.stop="shallowCopy(todo, todo.memento)"></i>
                   <i class="fa fa-times" @click.stop="onCancelEdit(todo)"></i>
                 </template>
               </div>
-              
-            </template>
-            
-
           </div>
+          
           
           <div class="todo-not-found" v-if="todos.length == 0">
             해당 일에 저장된 일정이 없습니다.
@@ -281,7 +281,7 @@ export default {
 
   #app-todos {
     background: white;
-    width: 80%;
+    width: 95%;
     display: inline-block;
     box-shadow: 0 0 6px $shadow;
     padding: 20px 48px;
@@ -319,6 +319,7 @@ export default {
 
         
         .dt {
+          width: 85%;
           padding: 20px 30px 20px 4px;
           border-bottom: 1.5px solid #999;
           font-size: 18px;
@@ -331,6 +332,7 @@ export default {
         .todo-add {
           display: flex;
           padding: 20px 30px 20px 30px;
+          width: 85%;
           border-bottom: 3px dotted #ddd;
           i {
             margin: auto;
@@ -340,17 +342,26 @@ export default {
       }
     }
   }
+
+  .todo-lt-cover {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+
   .todo-opts {
-      flex: 1;
+      width: 15%;
       display: flex;
       flex-direction: row;
+      justify-content: center;
       i {
         margin: 0 8px;
         font-size: 24px;
       }
     }
-
+  
   .todo-lt {
+    width: 85%;
     display: flex;
     justify-content: space-between;
     align-items: center;
