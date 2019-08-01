@@ -1,17 +1,21 @@
 import Vue from 'vue';
-import App from './App.vue';
 
-import store from './store';
 import VueRx from 'vue-rx';
 import axios from 'axios';
+import VTooltip from 'v-tooltip'
 import UUID from 'vue-uuid';
 import VueLodash from 'vue-lodash'
 import VueAxios from 'vue-axios'
 import VueRouter from 'vue-router';
+
+import App from './App.vue';
+import store from './store';
 import router from '@/router';
 
 
 
+ 
+Vue.use(VTooltip)
 Vue.use(VueRx);
 Vue.use(VueAxios, axios);
 Vue.use(VueLodash, { name: 'lodash' });

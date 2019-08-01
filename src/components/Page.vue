@@ -1,7 +1,7 @@
 <template>
   <div id="app-page">
     
-    <div class="todo-page-header">
+    <!-- <div class="todo-page-header">
       <span class="logo">VUE TODO</span>
     </div>
 
@@ -16,8 +16,18 @@
       <span>{{ toastMsg }}</span>
     </div>
 
-    <div class="base-bg"></div>
-
+    <div class="base-bg"></div> -->
+    
+    <button style="margin-top: 120px; margin-left: 55px;" class="btn btn-default" v-tooltip="'You have ' + count + ' new messages.'" @click.stop="count++">self v-tooltip</button>
+    <v-popover  trigger="hover" placement="top">
+  
+      <button>Click me</button>
+  
+      <div slot="popover" class="test-vtooltip">
+        <input type="text" class="form-control">
+        <button class="btn bt">click me</button>
+      </div>
+    </v-popover>
   </div>
   
 </template>
@@ -27,13 +37,15 @@
   export default {
     components: { 
       AppTodoPageComponent
+      
     },
     data() {
       return {
         isLoadingShow: true,
         isToastShow: false,
         isToastSuccess: true,
-        toastMsg: ''
+        toastMsg: '',
+        count: 0
       }
     },
     created() {
@@ -136,6 +148,12 @@
     width: 100vw;
     height: 100vh;
     z-index: -99999;
+  }
+
+  .test-vtooltip {
+    width: 120px;
+    height: 50px;
+    background: white;
   }
 </style>
 
